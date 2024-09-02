@@ -37,10 +37,12 @@
 // Function that takes in a rvalue reference as an argument.
 // It seizes ownership of the vector passed in, appends 3 to
 // the back of it, and prints the values in the vector.
-void move_add_three_and_print(std::vector<int> &&vec) {
+void move_add_three_and_print(std::vector<int> &&vec)
+{
   std::vector<int> vec1 = std::move(vec);
   vec1.push_back(3);
-  for (const int &item : vec1) {
+  for (const int &item : vec1)
+  {
     std::cout << item << " ";
   }
   std::cout << "\n";
@@ -51,15 +53,19 @@ void move_add_three_and_print(std::vector<int> &&vec) {
 // and prints the values in the vector. Notably, it does not seize
 // ownership of the vector. Therefore, the argument passed in would
 // still be usable in the callee context.
-void add_three_and_print(std::vector<int> &&vec) {
+void add_three_and_print(std::vector<int> &&vec)
+{
   vec.push_back(3);
-  for (const int &item : vec) {
+  vec.push_back(7);
+  for (const int &item : vec)
+  {
     std::cout << item << " ";
   }
   std::cout << "\n";
 }
 
-int main() {
+int main()
+{
   // Take this expression. Note that 'a' is a lvalue, since it's a variable that
   // refers to a specific space in memory (where 'a' is stored). 10 is a rvalue.
   int a = 10;
@@ -92,8 +98,12 @@ int main() {
 
   // It would be unwise to try to do anything with int_array2 here. Uncomment
   // the code to try it out! (On my machine, this segfaults...) NOTE: THIS MIGHT
-  // WORK FOR YOU. THIS DOES NOT MEAN THAT THIS IS WISE TO DO! 
+  // WORK FOR YOU. THIS DOES NOT MEAN THAT THIS IS WISE TO DO!
   // std::cout << int_array2[1] << std::endl;
+
+  // How to return the ownership back?
+
+  // Takeaway: move is a good pattern for memory management in morden C++
 
   // If we don't move the lvalue in the caller context to any lvalue in the
   // callee context, then effectively the function treats the rvalue reference
@@ -104,7 +114,10 @@ int main() {
   add_three_and_print(std::move(int_array3));
 
   // As seen here, we can print from this array.
-  std::cout << "Printing from int_array3: " << int_array3[1] << std::endl;
+  std::cout << "Printing from int_array3[1]: " << int_array3[1] << std::endl;
+
+  // And whatever is changed inside callee can be accessed outside
+  std::cout << "Printing from int_array3[5]: " << int_array3[5] << std::endl;
 
   return 0;
 }

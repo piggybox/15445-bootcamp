@@ -14,7 +14,7 @@
 #include <iostream>
 
 // A function that takes an int reference and adds 3 to it.
-void add_three(int &a) { a = a + 3; }
+void add_three(int &a) { a = a + 4; }
 
 int main() {
   // Take this expression. Note that b has type int& (int reference),
